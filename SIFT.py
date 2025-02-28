@@ -121,6 +121,13 @@ def find_target_image_in_screen(target_image, screenshot=None, region=None, tuni
     # Compute bounding box from the transformed corners
     x_min, y_min = np.int32(transformed_corners.min(axis=0).ravel())
     x_max, y_max = np.int32(transformed_corners.max(axis=0).ravel())
+
+    if region is not None:
+        # Transform bounding box back to screen coordinates
+        x_min += region[0]
+        y_min += region[1]
+        x_max += region[0]
+        y_max += region[1]
     bounding_box = (x_min, y_min, x_max - x_min, y_max - y_min)
 
     if tuning:
